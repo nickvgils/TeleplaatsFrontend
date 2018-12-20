@@ -83,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
         phoneList.add(new Phone("Samsung","Note 8 edge", Phone.Status.NEW, "97846513", 458, "Jappie", true));
         phoneList.add(new Phone("OnePlus","TWo", Phone.Status.USED, "645", 84569, "Ons Miranda", false));
         phoneList.add(new Phone("Apple","IPod touch", Phone.Status.NEW, "68456845", 5, "pieter", false));
+        phoneList.add(new Phone("Apple","IPhone X", Phone.Status.BROKEN, "12345", 900, "Henkie", false));
+        phoneList.add(new Phone("Samsung","Note 8 edge", Phone.Status.NEW, "97846513", 458, "Jappie", true));
+        phoneList.add(new Phone("OnePlus","TWo", Phone.Status.USED, "645", 84569, "Ons Miranda", false));
+        phoneList.add(new Phone("Apple","IPod touch", Phone.Status.NEW, "68456845", 5, "pieter", false));
+        phoneList.add(new Phone("Apple","IPhone X", Phone.Status.BROKEN, "12345", 900, "Henkie", false));
+        phoneList.add(new Phone("Samsung","Note 8 edge", Phone.Status.NEW, "97846513", 458, "Jappie", true));
+        phoneList.add(new Phone("OnePlus","TWo", Phone.Status.USED, "645", 84569, "Ons Miranda", false));
+        phoneList.add(new Phone("Apple","IPod touch", Phone.Status.NEW, "68456845", 5, "pieter", false));
 
         mAdapter.notifyDataSetChanged();
 
