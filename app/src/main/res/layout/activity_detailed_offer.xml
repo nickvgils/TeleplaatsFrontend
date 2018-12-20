@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailedOffer">
+
+    <TextView
+        android:id="@+id/DetailedBrandText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Brand:"
+        app:layout_constraintBottom_toTopOf="@id/DetailedModelText"
+        app:layout_constraintEnd_toStartOf="@+id/DetailedBrandValue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/DetailedModelText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Model"
+        app:layout_constraintBottom_toTopOf="@id/DetailedStatusText"
+        app:layout_constraintEnd_toStartOf="@+id/DetailedModelValue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailedBrandText" />
+
+    <TextView
+        android:id="@+id/DetailedStatusText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Status"
+        app:layout_constraintBottom_toTopOf="@id/DetailedImeiText"
+        app:layout_constraintEnd_toStartOf="@+id/DetailedStatusValue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailedModelText" />
+
+    <TextView
+        android:id="@+id/DetailedImeiText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Imei"
+        app:layout_constraintBottom_toTopOf="@id/PriceText"
+        app:layout_constraintEnd_toStartOf="@+id/DetailedImeiValue"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailedStatusText" />
+
+    <TextView
+        android:id="@+id/PriceText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Price"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/DetailedPriceValue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailedImeiText" />
+
+    <TextView
+        android:id="@+id/DetailedBrandValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Brand Placeholder"
+        app:layout_constraintBottom_toTopOf="@id/DetailedModelValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/DetailedBrandText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/DetailedModelValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Model Placeholder"
+        app:layout_constraintBottom_toTopOf="@id/DetailedStatusValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/DetailedModelText"
+        app:layout_constraintTop_toBottomOf="@+id/DetailedBrandValue" />
+
+    <TextView
+        android:id="@+id/DetailedStatusValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Status placeholder"
+        app:layout_constraintBottom_toTopOf="@id/DetailedImeiValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/DetailedStatusText"
+        app:layout_constraintTop_toBottomOf="@+id/DetailedModelValue" />
+
+    <TextView
+        android:id="@+id/DetailedImeiValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Imei Placeholder"
+        app:layout_constraintBottom_toTopOf="@id/DetailedPriceValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/DetailedImeiText"
+        app:layout_constraintTop_toBottomOf="@+id/DetailedStatusValue" />
+
+    <TextView
+        android:id="@+id/DetailedPriceValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Price Placeholder"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/DetailedImeiText"
+        app:layout_constraintTop_toBottomOf="@+id/DetailedImeiValue" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".6" />
+
+    <Button
+        android:id="@+id/BuyPhoneButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Buy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cancelButton"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/BuyPhoneButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.87" />
+</android.support.constraint.ConstraintLayout>

@@ -8,10 +8,13 @@ import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.Web3jFactory;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
+import org.web3j.tuples.generated.Tuple6;
 
 import java.io.IOException;
+import java.math.BigInteger;
 
 import static org.web3j.tx.Contract.GAS_LIMIT;
 import static org.web3j.tx.ManagedTransaction.GAS_PRICE;
@@ -29,7 +32,7 @@ class RetreiveWeb3jData extends AsyncTask<Void, Void, Void> {
 
     public void Web3jTest()
     {
-        Web3j web3 = Web3jFactory.build(new HttpService("http://192.168.1.157:8545"));  // defaults to http://localhost:8545/
+        Web3j web3 = Web3jFactory.build(new HttpService("http://192.168.178.33:8545"));  // defaults to http://localhost:8545/
 
         Web3ClientVersion web3ClientVersion = null;
         try {
@@ -42,12 +45,21 @@ class RetreiveWeb3jData extends AsyncTask<Void, Void, Void> {
 
         Credentials credentials = getCredentialsFromPrivateKey();
 
-        MyFirstContract contract = MyFirstContract.load(
+        Teleplaats contract = Teleplaats.load(
                 "0x7008d8d2138E8ecAAb77E876915e8aA5A37E295a", web3, credentials, GAS_PRICE, GAS_LIMIT);
         try {
             //contract.setName("bieke").send();
-            String test = contract.getName().send();
-            Log.d(TAG, "Web3jTest: " + test);
+            BigInteger test = contract.getPhoneCount().send();
+
+            TransactionReceipt tr = contract.addPhone("imei", "model", "brand", "state", "info").send();
+
+            BigInteger test2 = contract.getPhoneCount().send();
+
+
+            BigInteger phoneIndex = test2.subtract(BigInteger.valueOf(1));
+
+            Tuple6<String, String, String, String, String, String> phoneInfo = contract.getPhone(phoneIndex).send();
+            Log.d(TAG, "Web3jTest: " + phoneInfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
