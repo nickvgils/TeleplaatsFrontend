@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPhoneActivity extends AppCompatActivity {
+public class SellPhoneActivity extends AppCompatActivity {
 
     private Spinner spinner;
     private TextView brandText, modelText, imeiText;
@@ -17,7 +17,7 @@ public class AddPhoneActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_phone);
+        setContentView(R.layout.activity_sell_phone);
 
         SetupSpinner();
 
