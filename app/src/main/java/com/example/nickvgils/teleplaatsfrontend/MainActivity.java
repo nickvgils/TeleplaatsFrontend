@@ -12,17 +12,37 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
+import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+
+import org.web3j.crypto.CipherException;
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.WalletUtils;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.Web3jFactory;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
+import org.web3j.protocol.http.HttpService;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
-    private Button sellPhoneButton;
+    private String TAG = "MAINACTIVITY";private Button sellPhoneButton;
     private List<Phone> phoneList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PhoneAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         sellPhoneButton = findViewById(R.id.sellPhoneButton);
         sellPhoneButton.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        new RetreiveWeb3jData().execute();
 
 //        //testcode camiel
 //        Intent intent = new Intent(this,SellPhoneActivity.class);
@@ -66,6 +86,5 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter.notifyDataSetChanged();
 
-    }
-
+    }     
 }
