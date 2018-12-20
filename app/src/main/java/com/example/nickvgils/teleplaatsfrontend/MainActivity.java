@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        new RetreiveWeb3jData().execute();
+        //new RetreiveWeb3jData().execute();
 
 //        //testcode camiel
 //        Intent intent = new Intent(this,SellPhoneActivity.class);

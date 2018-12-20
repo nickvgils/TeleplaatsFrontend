@@ -1,7 +1,9 @@
 package com.example.nickvgils.teleplaatsfrontend;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,17 +44,49 @@ public class PhoneAdapter extends RecyclerView.Adapter<PhoneAdapter.MyViewHolder
 
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         Phone phone = phoneList.get(position);
         holder.brandModel.setText(phone.getBrand() +" - " + phone.getModel());
-        //holder.price.setText(phone.getPrice());
+        holder.price.setText(String.valueOf(phone.getPrice()));
         if(phone.isBidding())
             holder.bidding.setText("Bidding: YES");
         else
             holder.bidding.setText("Bidding: NO");
 
         holder.owner.setText(phone.getOwner());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("test", "CLICKED ON: " + position);
+                Intent intent = new Intent(v.getContext(),DetailedOffer.class);
+
+                intent.putExtra("brand", phoneList.get(position).getBrand());
+                intent.putExtra("model", phoneList.get(position).getModel());
+                intent.putExtra("price", phoneList.get(position).getPrice());
+                intent.putExtra("imei", phoneList.get(position).getImei());
+
+                switch (phoneList.get(position).getStatus())
+                {
+                    case NEW:
+                    {
+                        intent.putExtra("status", "NEW");
+                    }   break;
+                    case USED:
+                    {
+                        intent.putExtra("status", "USED");
+                    }   break;
+                    case BROKEN:
+                    {
+                        intent.putExtra("status", "BROKEN");
+                    }   break;
+                }
+
+                v.getContext().startActivity(intent);
+            }
+        });
     }
+
 
 
 

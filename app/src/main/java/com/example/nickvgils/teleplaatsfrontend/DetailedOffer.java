@@ -5,6 +5,12 @@ import android.os.Bundle;
 
 public class DetailedOffer extends AppCompatActivity {
 
+    private String brand;
+    private String model;
+    private String status;
+    private String price;
+    private String imei;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
