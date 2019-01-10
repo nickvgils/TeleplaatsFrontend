@@ -33,7 +33,7 @@ public class Web3J {
     private static final String ipAdress = "192.168.1.160";
     private static final String port = "7545";
 
-    private final static String PRIVATE_KEY = "c0e89e03bad028da17b7486d90ff8b12f86f0ea6edcb5e5f3a0795cbb7e949ab";
+    private final static String PRIVATE_KEY = "4e81218c256c039e229b803065266b45c19fa04649f6ee96936c1dc9c5d059e1";
 
     private static Teleplaats contract;
 
@@ -87,27 +87,19 @@ public class Web3J {
 
 
             //first time deploy then load is the intented way but not sure if works
-            contract = loadContract("0x0D53Ba7dc913B96e641EA9d22c065B2AE2492A05");
+            contract = loadContract("0x6632f46a433a997b7538b2bc4c5b2178d65690d0");
             //contract = deployContract();
 
             ownAddr = Web3J.getCredentialsFromPrivateKey().getAddress();
 
-            //testcode
-            if(contract != null)
-            {
-                Log.d(TAG, "onPostExecute: " + contract.getContractAddress());
-                Phone phone = new Phone("69696969"," ONE Plus"," 1 = 0","broken", "Camiel", "tilly", 8080, false);
-                sellPhone(phone);
-                //new GetPhonesTask(delegate).execute();
 
-                //ownAddr = contract.getTransactionReceipt().getFrom();
-            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             //new GetPhones().execute();
+            Log.d(TAG, "onPostExecute: " + contract.getContractAddress());
         }
     }
 
@@ -201,9 +193,9 @@ public class Web3J {
         }
     }
 
-    private static void buyPhone(int id){
+    public void buyPhone(String username, int id){
         try {
-            TransactionReceipt tr = contract.buyOrder("",BigInteger.valueOf(id + 1), BigInteger.valueOf(phones.get(id).getPrice())).send();
+            TransactionReceipt tr = contract.buyOrder(username,BigInteger.valueOf(id + 1), BigInteger.valueOf(phones.get(id).getPrice())).send();
             Log.d(TAG, "doInBackground: ");
         } catch (Exception e) {
             e.printStackTrace();

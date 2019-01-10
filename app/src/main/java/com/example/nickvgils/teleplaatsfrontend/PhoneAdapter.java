@@ -45,7 +45,7 @@ public class PhoneAdapter extends RecyclerView.Adapter<PhoneAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        Phone phone = phoneList.get(position);
+        final Phone phone = phoneList.get(position);
         holder.brandModel.setText(phone.getBrand() +" - " + phone.getModel());
         holder.price.setText(String.valueOf(phone.getPrice()));
         if(phone.isBidding())
@@ -61,10 +61,12 @@ public class PhoneAdapter extends RecyclerView.Adapter<PhoneAdapter.MyViewHolder
                 Log.d("test", "CLICKED ON: " + position);
                 Intent intent = new Intent(v.getContext(),DetailedOffer.class);
 
+                intent.putExtra("id", position);
                 intent.putExtra("brand", phoneList.get(position).getBrand());
                 intent.putExtra("model", phoneList.get(position).getModel());
                 intent.putExtra("price", phoneList.get(position).getPrice());
                 intent.putExtra("imei", phoneList.get(position).getImei());
+                intent.putExtra("username", phoneList.get(position).getUsername());
 
                 switch (phoneList.get(position).getStatus())
                 {

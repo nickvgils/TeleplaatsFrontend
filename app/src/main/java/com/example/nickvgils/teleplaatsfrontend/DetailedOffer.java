@@ -14,6 +14,8 @@ public class DetailedOffer extends AppCompatActivity {
     private String status;
     private String price;
     private String imei;
+    private int id;
+    private String username;
 
     private TextView detailedBrandValue, detailedModelValue, detailedStatusValue, detailedImeiValue, detailedPriceValue;
 
@@ -36,12 +38,17 @@ public class DetailedOffer extends AppCompatActivity {
         detailedImeiValue.setText(intent.getExtras().getString("imei"));
         detailedStatusValue.setText(intent.getExtras().getString("status"));
 
+        id = intent.getExtras().getInt("id");
+        username = intent.getExtras().getString("username");
+
 
         Button buyButton = findViewById(R.id.BuyPhoneButton);
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo add method to buy the phone.
+                Web3J.getInstance().buyPhone(username,id);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
