@@ -46,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Web3J web3J;
 
-    private Teleplaats teleplaats;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         //web3J = Web3J.getInstance();
 
-        new DeployWeb3jContract().execute();
+        new Web3jTest().execute();
 
         //new RetreiveWeb3jData().execute();
 
@@ -101,51 +98,22 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    class DeployWeb3jContract extends AsyncTask<Void, Void, Teleplaats> {
-
-        @Override
-        protected Teleplaats doInBackground(Void... voids) {
-
-            try {
-                Teleplaats contract = Teleplaats.deploy(
-                        Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
-                        GAS_PRICE, GAS_LIMIT).send();
-                return contract;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Teleplaats contract) {
-            teleplaats = contract;
-            Log.d(TAG, "onPostExecute: " + teleplaats.getContractAddress());
-            new AddPhone().execute();
-
-
-        }
-    }
-
-    class GetAllPhones extends AsyncTask<Void, Void, List<Phone>> {
+    class Web3jTest extends AsyncTask<Void, Void, List<Phone>> {
 
         @Override
         protected List<Phone> doInBackground(Void... voids) {
 
-            List<Phone> phones = new ArrayList<>();
-            try {
-                int phoneCount = teleplaats.phoneid().send().intValue();
+        Teleplaats contract = deployContract();
+        if(contract != null)
+        {
+            Log.d(TAG, "onPostExecute: " + contract.getContractAddress());
 
-                for (int i = 1; i <= phoneCount; i++){
-                    //(String brand, String model, Status status, String imei, int price, String owner, boolean bidding)
-                    Tuple6<String, String, String, String, String, String> phoneTuple = teleplaats.phones(BigInteger.valueOf(i)).send();
-                    Tuple8<String, String, Boolean, BigInteger, Boolean, String, String, BigInteger> orderTuple = teleplaats.orders(BigInteger.valueOf(i)).send();
-                    phones.add(new Phone(phoneTuple.getValue1(), phoneTuple.getValue2(), phoneTuple.getValue3(), phoneTuple.getValue4(), phoneTuple.getValue5(), phoneTuple.getValue6(), orderTuple.getValue4().intValue(), orderTuple.getValue3()));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            sellPhone(contract);
+            List<Phone> phones = getAllPhones(contract);
             return phones;
+
+        }
+        return new ArrayList<Phone>();
         }
 
         @Override
@@ -154,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void refreshPhones(List<Phone> phones)
     {
         phoneList.clear();
@@ -161,26 +131,44 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    class AddPhone extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected Void doInBackground(Void... voids) {
+    private Teleplaats deployContract(){
+        try {
+            Teleplaats contract = Teleplaats.deploy(
+                    Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
+                    GAS_PRICE, GAS_LIMIT).send();
+            return contract;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            try {
-                TransactionReceipt tr = teleplaats.sellPhone("sellerName", "imei", "model", "brand", "state", BigInteger.valueOf(5),false).send();
+    private List<Phone> getAllPhones(Teleplaats teleplaats){
+        List<Phone> phones = new ArrayList<>();
+        try {
+            int phoneCount = teleplaats.phoneid().send().intValue();
 
-                Log.d(TAG, "doInBackground: ");
-            } catch (Exception e) {
-                e.printStackTrace();
+            for (int i = 1; i <= phoneCount; i++){
+                //(String brand, String model, Status status, String imei, int price, String owner, boolean bidding)
+                Tuple6<String, String, String, String, String, String> phoneTuple = teleplaats.phones(BigInteger.valueOf(i)).send();
+                Tuple8<String, String, Boolean, BigInteger, Boolean, String, String, BigInteger> orderTuple = teleplaats.orders(BigInteger.valueOf(i)).send();
+                phones.add(new Phone(phoneTuple.getValue1(), phoneTuple.getValue2(), phoneTuple.getValue3(), phoneTuple.getValue4(), phoneTuple.getValue5(), phoneTuple.getValue6(), orderTuple.getValue4().intValue(), orderTuple.getValue3()));
             }
-            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        @Override
-        protected void onPostExecute(Void s) {
-            Log.d(TAG, "onPostExecute: " + s);
+        return phones;
+    }
 
-            new GetAllPhones().execute();
+    private void sellPhone(Teleplaats teleplaats){
+        try {
+            TransactionReceipt tr = teleplaats.sellPhone("sellerName", "imei", "model", "brand", "state", BigInteger.valueOf(5),false).send();
+
+            Log.d(TAG, "doInBackground: ");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
