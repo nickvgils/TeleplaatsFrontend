@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
 
-        //createTestPhones();
+        createTestPhones();
 
         //web3J = Web3J.getInstance();
 
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             try {
-                TransactionReceipt tr = teleplaats.sellPhone("sellerName", "imei", "model", "brand", "state", BigInteger.valueOf(5),false).send();
+                TransactionReceipt tr = teleplaats.sellPhone("henkie", "13456", "Iphone", "Apple", "broKen", BigInteger.valueOf(152),false).send();
 
                 Log.d(TAG, "doInBackground: ");
             } catch (Exception e) {

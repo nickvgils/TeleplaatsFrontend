@@ -53,7 +53,7 @@ public class PhoneAdapter extends RecyclerView.Adapter<PhoneAdapter.MyViewHolder
         else
             holder.bidding.setText("Bidding: NO");
 
-        holder.owner.setText(phone.getOwner());
+        holder.owner.setText(phone.getUsername());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
