@@ -15,7 +15,7 @@ import java.util.List;
 public class SellPhoneActivity extends AppCompatActivity {
 
     private Spinner spinner;
-    private TextView brandText, modelText, imeiText, priceText;
+    private TextView brandText, modelText, imeiText, priceText, usernameText;
     private Spinner statusSpinner;
 
     @Override
@@ -35,6 +35,7 @@ public class SellPhoneActivity extends AppCompatActivity {
 
         Button sellPhoneButton = findViewById(R.id.sellPhoneButton);
 
+        usernameText = findViewById(R.id.SellPhoneNameInput);
         brandText = findViewById(R.id.BrandInput);
         modelText = findViewById(R.id.ModelInput);
         imeiText = findViewById(R.id.ImeiInput);
@@ -51,7 +52,7 @@ public class SellPhoneActivity extends AppCompatActivity {
                 String price = priceText.getText().toString();
 
                 Integer priceInt = Integer.parseInt(price.equals("") ? "0" : price);
-                Phone phone = new Phone(imeiText.getText().toString(), modelText.getText().toString(), brandText.getText().toString(), statusSpinner.getSelectedItem().toString(), "", "", priceInt, false );
+                Phone phone = new Phone(imeiText.getText().toString(), modelText.getText().toString(), brandText.getText().toString(), statusSpinner.getSelectedItem().toString(), usernameText.getText().toString(), "", priceInt, false );
 
 //
                 new Web3J.SellPhoneTask().execute(phone);

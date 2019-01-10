@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toStartOf="@id/BrandInput"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop2" />
+        app:layout_constraintTop_toBottomOf="@id/SellPhoneName" />
 
     <EditText
         android:id="@+id/BrandInput"
@@ -70,7 +70,7 @@
         app:layout_constraintBottom_toTopOf="@id/ModelInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/BrandText"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop2" />
+        app:layout_constraintTop_toBottomOf="@id/SellPhoneNameInput" />
 
     <TextView
         android:id="@+id/ModelText"
@@ -141,16 +141,16 @@
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="125dp"
-        app:layout_constraintGuide_percent=".25" />
+        app:layout_constraintGuide_percent=".2" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineBot2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".75" />
 
@@ -186,5 +186,26 @@
         app:layout_constraintEnd_toStartOf="@id/sellPhoneButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineBot" />
+
+    <TextView
+        android:id="@+id/SellPhoneName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="Username"
+        app:layout_constraintBottom_toTopOf="@id/BrandText"
+        app:layout_constraintEnd_toStartOf="@id/SellPhoneNameInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop2" />
+
+    <EditText
+        android:id="@+id/SellPhoneNameInput"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/BrandInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/SellPhoneName"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop2" />
 
 </android.support.constraint.ConstraintLayout>
