@@ -146,12 +146,12 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
         protected Teleplaats doInBackground(Void... voids) {
 
             try {
-                //Teleplaats contract = Teleplaats.deploy(
-                //        Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
-                //        GAS_PRICE, GAS_LIMIT).send();
+                Teleplaats contract = Teleplaats.deploy(
+                        Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
+                        GAS_PRICE, GAS_LIMIT).send();
 
-                Teleplaats contractLoad = Teleplaats.load("0x5756268577876592AF08663ba3Ff5bD45054CE32",Web3J.getInstance().web3,Web3J.getCredentialsFromPrivateKey(),GAS_PRICE, GAS_LIMIT);
-                return contractLoad;
+                //Teleplaats contractLoad = Teleplaats.load("0x5756268577876592AF08663ba3Ff5bD45054CE32",Web3J.getInstance().web3,Web3J.getCredentialsFromPrivateKey(),GAS_PRICE, GAS_LIMIT);
+                return contract;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -192,13 +192,6 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
                 e.printStackTrace();
             }
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void s) {
-            Log.d(TAG, "onPostExecute: " + s);
-
-            new GetAllPhones().execute();
         }
     }
 }

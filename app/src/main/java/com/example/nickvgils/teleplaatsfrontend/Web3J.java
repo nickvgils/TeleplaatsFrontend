@@ -28,10 +28,10 @@ public class Web3J {
 
     public Web3j web3 = null;
 
-    private static final String ipAdress = "192.168.1.157";
-    private static final String port = "8545";
+    private static final String ipAdress = "192.168.1.160";
+    private static final String port = "7545";
 
-    private final static String PRIVATE_KEY = "8563420c509590079e83c548a1fe1e4eecd087ca9e2e7ad4c051690a984eefc4";
+    private final static String PRIVATE_KEY = "17e1b5b00e3a0f5303e883490c982660cca1869b7acfd053ee356a4c8cc663b6";
 
     private static Teleplaats contract;
 
