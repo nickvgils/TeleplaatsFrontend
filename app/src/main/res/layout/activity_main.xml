@@ -22,21 +22,19 @@
         android:layout_height="0dp"
         android:text="Sell Phone"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toStartOf="@+id/OffersButton"
+        app:layout_constraintEnd_toStartOf="@+id/MyPhonesButton"
         app:layout_constraintStart_toEndOf="@+id/RefreshButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/OffersButton"
+        android:id="@+id/MyPhonesButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:text="My Offers"
+        android:text="MyPhones"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/sellPhoneButton" />
+        app:layout_constraintStart_toEndOf="@id/sellPhoneButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"

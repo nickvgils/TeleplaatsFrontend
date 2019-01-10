@@ -39,12 +39,14 @@ import static org.web3j.tx.ManagedTransaction.GAS_PRICE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String TAG = "MAINACTIVITY";private Button sellPhoneButton;
-    private List<Phone> phoneList = new ArrayList<>();
+    private String TAG = "MAINACTIVITY";
+    private Button sellPhoneButton;
+    private Button myPhonesButton;
+    public static List<Phone> phoneList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PhoneAdapter mAdapter;
-
     private Web3J web3J;
+    public String ownAddr;
 
     private Teleplaats teleplaats;
 
@@ -53,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myPhonesButton = findViewById(R.id.MyPhonesButton);
+        myPhonesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyPhones.class);
+                intent.putExtra("ownAddr", ownAddr);
+                startActivity(intent);
+            }
+        });
 
 
         sellPhoneButton = findViewById(R.id.sellPhoneButton);
@@ -89,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public String getOwnAddr() {
+        return ownAddr;
+    }
 
     public void createTestPhones()
     {
@@ -107,10 +122,12 @@ public class MainActivity extends AppCompatActivity {
         protected Teleplaats doInBackground(Void... voids) {
 
             try {
-                Teleplaats contract = Teleplaats.deploy(
-                        Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
-                        GAS_PRICE, GAS_LIMIT).send();
-                return contract;
+                //Teleplaats contract = Teleplaats.deploy(
+                //        Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
+                //        GAS_PRICE, GAS_LIMIT).send();
+
+                Teleplaats contractLoad = Teleplaats.load("0x5756268577876592AF08663ba3Ff5bD45054CE32",Web3J.getInstance().web3,Web3J.getCredentialsFromPrivateKey(),GAS_PRICE, GAS_LIMIT);
+                return contractLoad;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -121,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Teleplaats contract) {
             teleplaats = contract;
             Log.d(TAG, "onPostExecute: " + teleplaats.getContractAddress());
+            ownAddr = teleplaats.getContractAddress();
             new AddPhone().execute();
 
 
@@ -167,8 +185,7 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             try {
-                TransactionReceipt tr = teleplaats.sellPhone("henkie", "13456", "Iphone", "Apple", "broKen", BigInteger.valueOf(152),false).send();
-
+                //TransactionReceipt tr = teleplaats.sellPhone("henkie", "13456", "Iphone", "Apple", "broKen", BigInteger.valueOf(152),false).send();
                 Log.d(TAG, "doInBackground: ");
             } catch (Exception e) {
                 e.printStackTrace();
