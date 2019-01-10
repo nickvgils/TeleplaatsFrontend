@@ -4,24 +4,34 @@ import android.support.annotation.NonNull;
 
 public class Phone {
 
-    public enum Status{NEW,USED,BROKEN}
+    public enum Status{NEW,USED,BROKEN,UNDEFINED}
 
     private String brand;
     private String model;
     private Status status;
     private String imei;
     private int price;
-    private String owner;
+    private String username;
     private boolean bidding;
+    private String ownerAddr;
 
-    public Phone(String imei, String model, String brand, String state, String username, String ownerAddr, int price, boolean bidding) {
+
+    public Phone(String imei, String model, String brand, String status, String username, String ownerAddr, int price, boolean bidding) {
         this.brand = brand;
         this.model = model;
-        this.status = status;
         this.imei = imei;
         this.price = price;
-        this.owner = owner;
+        this.username = username;
         this.bidding = bidding;
+        this.ownerAddr = ownerAddr;
+
+        switch (status.toLowerCase())
+        {
+            case "new": this.status = Status.NEW; break;
+            case "used": this.status = Status.USED; break;
+            case "broken" : this.status = Status.BROKEN; break;
+            default: this.status = Status.UNDEFINED; break;
+        }
     }
 
     public String getBrand() {
@@ -56,12 +66,12 @@ public class Phone {
         this.price = price;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getUsername() {
+        return username;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public boolean isBidding() {
@@ -80,5 +90,11 @@ public class Phone {
         this.imei = imei;
     }
 
+    public String getOwnerAddr() {
+        return ownerAddr;
+    }
 
+    public void setOwnerAddr(String ownerAddr) {
+        this.ownerAddr = ownerAddr;
+    }
 }

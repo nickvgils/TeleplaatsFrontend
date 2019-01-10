@@ -2,7 +2,9 @@ package com.example.nickvgils.teleplaatsfrontend;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -20,6 +22,22 @@ public class SellPhoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sell_phone);
 
         SetupSpinner();
+
+        Button cancelButton = findViewById(R.id.cancelButtonSellPhone);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        Button sellPhoneButton = findViewById(R.id.sellPhoneButton);
+        sellPhoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo sell phone.
+            }
+        });
 
 
     }
