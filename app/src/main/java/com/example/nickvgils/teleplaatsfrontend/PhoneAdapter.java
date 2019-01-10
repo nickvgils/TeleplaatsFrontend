@@ -80,6 +80,10 @@ public class PhoneAdapter extends RecyclerView.Adapter<PhoneAdapter.MyViewHolder
                     {
                         intent.putExtra("status", "BROKEN");
                     }   break;
+                    case UNDEFINED:
+                    {
+                        intent.putExtra("status", "UNDEFINED");
+                    }   break;
                 }
 
                 v.getContext().startActivity(intent);

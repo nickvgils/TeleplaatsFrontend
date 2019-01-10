@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 public class Phone {
 
-    public enum Status{NEW,USED,BROKEN}
+    public enum Status{NEW,USED,BROKEN,UNDEFINED}
 
     private String brand;
     private String model;
@@ -13,15 +13,24 @@ public class Phone {
     private int price;
     private String owner;
     private boolean bidding;
+    private String ownerAddr;
 
-    public Phone(String brand, String model, Status status, String imei, int price, String owner, boolean bidding) {
+    public Phone(String imei, String model,String brand, String status, String owner, String ownerAddr, int price, boolean bidding) {
         this.brand = brand;
         this.model = model;
-        this.status = status;
         this.imei = imei;
         this.price = price;
         this.owner = owner;
         this.bidding = bidding;
+        this.ownerAddr = ownerAddr;
+
+        switch (status.toLowerCase())
+        {
+            case "new": this.status = Status.NEW; break;
+            case "used": this.status = Status.USED; break;
+            case "broken" : this.status = Status.BROKEN; break;
+            default: this.status = Status.UNDEFINED; break;
+        }
     }
 
     public String getBrand() {
@@ -80,5 +89,11 @@ public class Phone {
         this.imei = imei;
     }
 
+    public String getOwnerAddr() {
+        return ownerAddr;
+    }
 
+    public void setOwnerAddr(String ownerAddr) {
+        this.ownerAddr = ownerAddr;
+    }
 }
