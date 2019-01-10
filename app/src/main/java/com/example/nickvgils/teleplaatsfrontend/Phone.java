@@ -14,7 +14,7 @@ public class Phone {
     private String owner;
     private boolean bidding;
 
-    public Phone(String brand, String model, Status status, String imei, int price, String owner, boolean bidding) {
+    public Phone(String imei, String model, String brand, String state, String username, String ownerAddr, int price, boolean bidding) {
         this.brand = brand;
         this.model = model;
         this.status = status;
