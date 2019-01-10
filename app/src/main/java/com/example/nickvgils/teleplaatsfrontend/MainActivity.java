@@ -37,10 +37,11 @@ import java.io.IOException;
 import static org.web3j.tx.Contract.GAS_LIMIT;
 import static org.web3j.tx.ManagedTransaction.GAS_PRICE;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Web3jInterface {
 
     private String TAG = "MAINACTIVITY";
     private Button sellPhoneButton;
+
     private Button myPhonesButton;
     public static List<Phone> phoneList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         myPhonesButton = findViewById(R.id.MyPhonesButton);
         myPhonesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        web3J = Web3J.getInstance();
+
+
 
         sellPhoneButton = findViewById(R.id.sellPhoneButton);
         sellPhoneButton.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),SellPhoneActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button refreshButton = findViewById(R.id.RefreshButton);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPhones();
             }
         });
 
@@ -86,23 +99,33 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
 
+
         createTestPhones();
 
         //web3J = Web3J.getInstance();
 
         new DeployWeb3jContract().execute();
 
-        //new RetreiveWeb3jData().execute();
+        initContractTask();
 
-//        //testcode camiel
-//        Intent intent = new Intent(this,SellPhoneActivity.class);
-//        startActivity(intent);
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPhones();
+    }
+
+    public void initContractTask(){
+        new Web3J.InitContractTask(this).execute();
+    }
 
     public String getOwnAddr() {
         return ownAddr;
+    }
+    public void getPhones(){
+        new Web3J.GetPhonesTask(this).execute();
     }
 
     public void createTestPhones()
@@ -112,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         phoneList.add(new Phone("12345","IPhone X","Apple","broken", "Camiel", "tilly", 900, false));
         phoneList.add(new Phone("12345","IPhone X","Apple","broken", "Camiel", "tilly", 900, false));
         phoneList.add(new Phone("12345","IPhone X","Apple","broken", "Camiel", "tilly", 900, false));
+
   
         mAdapter.notifyDataSetChanged();
     }
@@ -143,41 +167,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
     }
 
-    class GetAllPhones extends AsyncTask<Void, Void, List<Phone>> {
 
-        @Override
-        protected List<Phone> doInBackground(Void... voids) {
-
-            List<Phone> phones = new ArrayList<>();
-            try {
-                int phoneCount = teleplaats.phoneid().send().intValue();
-
-                for (int i = 1; i <= phoneCount; i++){
-                    //(String brand, String model, Status status, String imei, int price, String owner, boolean bidding)
-                    Tuple6<String, String, String, String, String, String> phoneTuple = teleplaats.phones(BigInteger.valueOf(i)).send();
-                    Tuple8<String, String, Boolean, BigInteger, Boolean, String, String, BigInteger> orderTuple = teleplaats.orders(BigInteger.valueOf(i)).send();
-                    phones.add(new Phone(phoneTuple.getValue1(), phoneTuple.getValue2(), phoneTuple.getValue3(), phoneTuple.getValue4(), phoneTuple.getValue5(), phoneTuple.getValue6(), orderTuple.getValue4().intValue(), orderTuple.getValue3()));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return phones;
-        }
-
-        @Override
-        protected void onPostExecute(List<Phone> phones) {
-            refreshPhones(phones);
-        }
-    }
-
-    private void refreshPhones(List<Phone> phones)
+    @Override
+    public void refreshPhones(List<Phone> phones)
     {
         phoneList.clear();
         phoneList.addAll(phones);
         mAdapter.notifyDataSetChanged();
     }
+
 
     class AddPhone extends AsyncTask<Void, Void, Void> {
 
@@ -200,7 +201,4 @@ public class MainActivity extends AppCompatActivity {
             new GetAllPhones().execute();
         }
     }
-
-
-
 }

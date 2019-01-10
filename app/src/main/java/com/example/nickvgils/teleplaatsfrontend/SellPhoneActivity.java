@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.List;
 public class SellPhoneActivity extends AppCompatActivity {
 
     private Spinner spinner;
-    private TextView brandText, modelText, imeiText;
+    private TextView brandText, modelText, imeiText, priceText;
+    private Spinner statusSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +34,30 @@ public class SellPhoneActivity extends AppCompatActivity {
         });
 
         Button sellPhoneButton = findViewById(R.id.sellPhoneButton);
+
+        brandText = findViewById(R.id.BrandInput);
+        modelText = findViewById(R.id.ModelInput);
+        imeiText = findViewById(R.id.ImeiInput);
+
+        statusSpinner = findViewById(R.id.StatusDropdown);
+        priceText = findViewById(R.id.PriceInput);
+
+
+
         sellPhoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo sell phone.
+
+                String price = priceText.getText().toString();
+
+                Integer priceInt = Integer.parseInt(price.equals("") ? "0" : price);
+                Phone phone = new Phone(imeiText.getText().toString(), modelText.getText().toString(), brandText.getText().toString(), statusSpinner.getSelectedItem().toString(), "", "", priceInt, false );
+
+//
+                new Web3J.SellPhoneTask().execute(phone);
+//
+                Toast.makeText(v.getContext(), "Phone succesfully added to the market!", Toast.LENGTH_LONG).show();
+                onBackPressed();
             }
         });
 
