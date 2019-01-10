@@ -11,16 +11,17 @@ public class Phone {
     private Status status;
     private String imei;
     private int price;
-    private String owner;
+    private String username;
     private boolean bidding;
     private String ownerAddr;
 
-    public Phone(String imei, String model,String brand, String status, String owner, String ownerAddr, int price, boolean bidding) {
+
+    public Phone(String imei, String model, String brand, String status, String username, String ownerAddr, int price, boolean bidding) {
         this.brand = brand;
         this.model = model;
         this.imei = imei;
         this.price = price;
-        this.owner = owner;
+        this.username = username;
         this.bidding = bidding;
         this.ownerAddr = ownerAddr;
 
@@ -65,12 +66,12 @@ public class Phone {
         this.price = price;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getUsername() {
+        return username;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public boolean isBidding() {
