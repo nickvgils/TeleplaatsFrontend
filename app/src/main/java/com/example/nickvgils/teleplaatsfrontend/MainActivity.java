@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
     private RecyclerView recyclerView;
     private PhoneAdapter mAdapter;
     private Web3J web3J;
-    public String ownAddr;
 
     private Teleplaats teleplaats;
 
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MyPhones.class);
-                intent.putExtra("ownAddr", ownAddr);
                 startActivity(intent);
             }
         });
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
 
         //web3J = Web3J.getInstance();
 
-        new DeployWeb3jContract().execute();
+        //new DeployWeb3jContract().execute();
 
         initContractTask();
 
@@ -121,9 +119,6 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
         new Web3J.InitContractTask(this).execute();
     }
 
-    public String getOwnAddr() {
-        return ownAddr;
-    }
     public void getPhones(){
         new Web3J.GetPhonesTask(this).execute();
     }
@@ -140,35 +135,35 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
         mAdapter.notifyDataSetChanged();
     }
 
-    class DeployWeb3jContract extends AsyncTask<Void, Void, Teleplaats> {
-
-        @Override
-        protected Teleplaats doInBackground(Void... voids) {
-
-            try {
-                Teleplaats contract = Teleplaats.deploy(
-                        Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
-                        GAS_PRICE, GAS_LIMIT).send();
-
-                //Teleplaats contractLoad = Teleplaats.load("0x5756268577876592AF08663ba3Ff5bD45054CE32",Web3J.getInstance().web3,Web3J.getCredentialsFromPrivateKey(),GAS_PRICE, GAS_LIMIT);
-                return contract;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Teleplaats contract) {
-            teleplaats = contract;
-            Log.d(TAG, "onPostExecute: " + teleplaats.getContractAddress());
-            ownAddr = teleplaats.getContractAddress();
-            new AddPhone().execute();
-
-
-        }
-
-    }
+//    class DeployWeb3jContract extends AsyncTask<Void, Void, Teleplaats> {
+//
+//        @Override
+//        protected Teleplaats doInBackground(Void... voids) {
+//
+//            try {
+//                Teleplaats contract = Teleplaats.deploy(
+//                        Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
+//                        GAS_PRICE, GAS_LIMIT).send();
+//
+//                //Teleplaats contractLoad = Teleplaats.load("0x5756268577876592AF08663ba3Ff5bD45054CE32",Web3J.getInstance().web3,Web3J.getCredentialsFromPrivateKey(),GAS_PRICE, GAS_LIMIT);
+//                return contract;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Teleplaats contract) {
+//            teleplaats = contract;
+//            Log.d(TAG, "onPostExecute: " + teleplaats.getContractAddress());
+//            ownAddr = teleplaats.getContractAddress();
+//            new AddPhone().execute();
+//
+//
+//        }
+//
+//    }
 
 
     @Override

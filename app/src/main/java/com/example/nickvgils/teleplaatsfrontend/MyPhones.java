@@ -42,15 +42,18 @@ public class MyPhones extends AppCompatActivity {
         myPhones.add(new Phone("12345","IPhone X","Apple","broken", "Camiel", "tilly", 900, false));
 
 
-        String ownAddr = getIntent().getExtras().getString("ownAddr");
         myPhones.clear();
-        for(Phone p : MainActivity.phoneList)
+        if(Web3J.phones != null)
         {
-            if(p.getOwnerAddr().equals(ownAddr))
+            for(Phone p : Web3J.phones)
             {
-                myPhones.add(p);
+                if(p.getOwnerAddr().equals(Web3J.ownAddr))
+                {
+                    myPhones.add(p);
+                }
             }
         }
+
 
 
         myPhonesAdapter = new MyPhonesAdapter(myPhones);

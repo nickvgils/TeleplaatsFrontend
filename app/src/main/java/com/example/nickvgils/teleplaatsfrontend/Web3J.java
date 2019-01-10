@@ -25,8 +25,10 @@ public class Web3J {
 
     private static String TAG = "WEB3J";
 
+    public static List<Phone> phones;
 
     public Web3j web3 = null;
+    public static String ownAddr;
 
     private static final String ipAdress = "192.168.1.160";
     private static final String port = "7545";
@@ -83,13 +85,22 @@ public class Web3J {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            contract = deployContract();
+
+            //first time deploy then load is the intented way but not sure if works
+            contract = loadContract("0x0D53Ba7dc913B96e641EA9d22c065B2AE2492A05");
+            //contract = deployContract();
+
+            ownAddr = Web3J.getCredentialsFromPrivateKey().getAddress();
+
+            //testcode
             if(contract != null)
             {
                 Log.d(TAG, "onPostExecute: " + contract.getContractAddress());
-                Phone phone = new Phone("12345","IPhone X","Apple","broken", "Camiel", "tilly", 900, false);
+                Phone phone = new Phone("69696969"," ONE Plus"," 1 = 0","broken", "Camiel", "tilly", 8080, false);
                 sellPhone(phone);
                 //new GetPhonesTask(delegate).execute();
+
+                //ownAddr = contract.getTransactionReceipt().getFrom();
             }
             return null;
         }
@@ -138,6 +149,17 @@ public class Web3J {
         }
     }
 
+    public static Teleplaats loadContract(String contractAddress)
+    {
+
+        try {
+            Teleplaats contract = Teleplaats.load(contractAddress,Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(), GAS_PRICE, GAS_LIMIT);
+            return contract;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     public static Teleplaats deployContract(){
@@ -153,7 +175,7 @@ public class Web3J {
     }
 
     private static List<Phone> getAllPhones(Teleplaats teleplaats){
-        List<Phone> phones = new ArrayList<>();
+        phones = new ArrayList<>();
         try {
             int phoneCount = teleplaats.phoneid().send().intValue();
 
@@ -173,7 +195,6 @@ public class Web3J {
     private static void sellPhone(Phone phone){
         try {
             TransactionReceipt tr = contract.sellPhone(phone.getUsername(), phone.getImei(), phone.getModel(), phone.getBrand(), phone.getStatus().toString(), BigInteger.valueOf(phone.getPrice()), phone.isBidding()).send();
-
             Log.d(TAG, "doInBackground: ");
         } catch (Exception e) {
             e.printStackTrace();
