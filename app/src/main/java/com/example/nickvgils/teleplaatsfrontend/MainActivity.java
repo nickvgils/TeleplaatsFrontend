@@ -41,16 +41,32 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
 
     private String TAG = "MAINACTIVITY";
     private Button sellPhoneButton;
-    private List<Phone> phoneList = new ArrayList<>();
+
+    private Button myPhonesButton;
+    public static List<Phone> phoneList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PhoneAdapter mAdapter;
+    private Web3J web3J;
+    public String ownAddr;
 
-    public Web3J web3J;
+    private Teleplaats teleplaats;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        myPhonesButton = findViewById(R.id.MyPhonesButton);
+        myPhonesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyPhones.class);
+                intent.putExtra("ownAddr", ownAddr);
+                startActivity(intent);
+            }
+        });
 
         web3J = Web3J.getInstance();
 
@@ -83,7 +99,15 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
         recyclerView.setAdapter(mAdapter);
 
 
+
+        createTestPhones();
+
+        //web3J = Web3J.getInstance();
+
+        new DeployWeb3jContract().execute();
+
         initContractTask();
+
 
     }
 
@@ -97,6 +121,9 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
         new Web3J.InitContractTask(this).execute();
     }
 
+    public String getOwnAddr() {
+        return ownAddr;
+    }
     public void getPhones(){
         new Web3J.GetPhonesTask(this).execute();
     }
@@ -109,7 +136,38 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
         phoneList.add(new Phone("12345","IPhone X","Apple","broken", "Camiel", "tilly", 900, false));
         phoneList.add(new Phone("12345","IPhone X","Apple","broken", "Camiel", "tilly", 900, false));
 
+  
         mAdapter.notifyDataSetChanged();
+    }
+
+    class DeployWeb3jContract extends AsyncTask<Void, Void, Teleplaats> {
+
+        @Override
+        protected Teleplaats doInBackground(Void... voids) {
+
+            try {
+                //Teleplaats contract = Teleplaats.deploy(
+                //        Web3J.getInstance().web3, Web3J.getCredentialsFromPrivateKey(),
+                //        GAS_PRICE, GAS_LIMIT).send();
+
+                Teleplaats contractLoad = Teleplaats.load("0x5756268577876592AF08663ba3Ff5bD45054CE32",Web3J.getInstance().web3,Web3J.getCredentialsFromPrivateKey(),GAS_PRICE, GAS_LIMIT);
+                return contractLoad;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Teleplaats contract) {
+            teleplaats = contract;
+            Log.d(TAG, "onPostExecute: " + teleplaats.getContractAddress());
+            ownAddr = teleplaats.getContractAddress();
+            new AddPhone().execute();
+
+
+        }
+
     }
 
 
@@ -119,5 +177,28 @@ public class MainActivity extends AppCompatActivity implements Web3jInterface {
         phoneList.clear();
         phoneList.addAll(phones);
         mAdapter.notifyDataSetChanged();
+    }
+
+
+    class AddPhone extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                //TransactionReceipt tr = teleplaats.sellPhone("henkie", "13456", "Iphone", "Apple", "broKen", BigInteger.valueOf(152),false).send();
+                Log.d(TAG, "doInBackground: ");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void s) {
+            Log.d(TAG, "onPostExecute: " + s);
+
+            new GetAllPhones().execute();
+        }
     }
 }
