@@ -33,7 +33,7 @@ public class Web3J {
     private static final String ipAdress = "192.168.1.160";
     private static final String port = "7545";
 
-    private final static String PRIVATE_KEY = "17e1b5b00e3a0f5303e883490c982660cca1869b7acfd053ee356a4c8cc663b6";
+    private final static String PRIVATE_KEY = "c0e89e03bad028da17b7486d90ff8b12f86f0ea6edcb5e5f3a0795cbb7e949ab";
 
     private static Teleplaats contract;
 
@@ -195,6 +195,15 @@ public class Web3J {
     private static void sellPhone(Phone phone){
         try {
             TransactionReceipt tr = contract.sellPhone(phone.getUsername(), phone.getImei(), phone.getModel(), phone.getBrand(), phone.getStatus().toString(), BigInteger.valueOf(phone.getPrice()), phone.isBidding()).send();
+            Log.d(TAG, "doInBackground: ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void buyPhone(int id){
+        try {
+            TransactionReceipt tr = contract.buyOrder("",BigInteger.valueOf(id + 1), BigInteger.valueOf(phones.get(id).getPrice())).send();
             Log.d(TAG, "doInBackground: ");
         } catch (Exception e) {
             e.printStackTrace();
